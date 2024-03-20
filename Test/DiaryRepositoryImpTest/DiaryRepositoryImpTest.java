@@ -19,9 +19,34 @@ public class DiaryRepositoryImpTest {
     @Test
     public void checkForEmptyDiary(){
         Diary diary =new Diary();
-        myDiaryRepositoryImp.save(diary);
-        assertEquals(1L,myDiaryRepositoryImp.count());
+        assertEquals(0,myDiaryRepositoryImp.count());
 
     }
+    @Test
+    public void checkThatDiaryIsOccupied(){
+        Diary diary =new Diary();
+        myDiaryRepositoryImp.save(diary);
+        assertEquals(1,myDiaryRepositoryImp.count());
 
+    }
+    @Test
+    public void checkThatDiaryIsOccupied_saveMoreThanOneDiary(){
+        Diary diary =new Diary();
+        myDiaryRepositoryImp.save(diary);
+        myDiaryRepositoryImp.save(diary);
+        assertEquals(2,myDiaryRepositoryImp.count());
+
+    }
+    @Test
+    public void checkThatDiaryIsOccupied_saveMoreThanOneDiary_deleteDiary(){
+        Diary diary =new Diary();
+        myDiaryRepositoryImp.save(diary);
+
+        myDiaryRepositoryImp.save(diary);
+        myDiaryRepositoryImp.save(diary);
+        assertEquals(3,myDiaryRepositoryImp.count());
+        myDiaryRepositoryImp.delete("eee");
+
+
+    }
 }

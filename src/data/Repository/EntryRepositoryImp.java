@@ -19,6 +19,7 @@ public class EntryRepositoryImp implements EntryRepository {
         Entry foundEntry = findById(entry.getId());
         entries.remove(foundEntry);
         entries.add(entry);
+
         entry.setDateCreated(foundEntry.getDateCreated());
 
     }
@@ -34,7 +35,7 @@ public class EntryRepositoryImp implements EntryRepository {
 
     @Override
     public List<Entry> findAll() {
-        return null;
+        return entries;
     }
 
     @Override
