@@ -6,7 +6,16 @@ public class Entry {
     private int id ;
     private String title;
     private String body;
-    private LocalDateTime dateCreated;
+    private LocalDateTime dateCreated = LocalDateTime.now();
+    private String author;
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
 
 
     public int getId() {
