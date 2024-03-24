@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Data
 @Document
 public class Entry {
-    private int id ;
+    private String id ;
     private String title;
     private String body;
     private LocalDateTime dateCreated = LocalDateTime.now();
