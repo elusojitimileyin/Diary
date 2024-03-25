@@ -3,7 +3,10 @@ package africa.semicolon.Diary.data.Repository;
 import africa.semicolon.Diary.data.model.Entry;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
+
 public interface EntryRepository extends MongoRepository<Entry, String> {
+    List<Entry> findByAuthor(String username);
 //    Entry save(Entry entry);
 //    List<Entry> findAll();
 //

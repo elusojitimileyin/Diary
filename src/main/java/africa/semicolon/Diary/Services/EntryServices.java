@@ -2,16 +2,19 @@ package africa.semicolon.Diary.Services;
 
 import africa.semicolon.Diary.data.model.Entry;
 import africa.semicolon.Diary.request.CreateEntryRequest;
+import africa.semicolon.Diary.request.UpdateEntryRequest;
+
 import java.util.List;
 
 public interface EntryServices {
 
     void createEntry(CreateEntryRequest request);
 
-    void deleteEntry(Entry entry);
 
-    List<Entry>findAllEntry();
+    List<Entry> findAllEntry(String username);
 
 
-    void save(Entry entry);
+    void deleteEntryBy(UpdateEntryRequest request);
+
+    void updateEntryBy(UpdateEntryRequest request);
 }

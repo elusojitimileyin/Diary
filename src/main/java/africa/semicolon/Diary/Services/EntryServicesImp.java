@@ -1,15 +1,21 @@
 package africa.semicolon.Diary.Services;
 
 import africa.semicolon.Diary.data.Repository.EntryRepository;
+import africa.semicolon.Diary.data.model.Diary;
 import africa.semicolon.Diary.data.model.Entry;
 import africa.semicolon.Diary.request.CreateEntryRequest;
+import africa.semicolon.Diary.request.UpdateEntryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EntryServicesImp implements EntryServices {
+    @Autowired
+    private DiaryService diaryService;
 
     @Autowired
     private EntryRepository entryRepository;
@@ -17,37 +23,57 @@ public class EntryServicesImp implements EntryServices {
 
     @Override
     public void createEntry(CreateEntryRequest request) {
-        if (validateEntryCreation(request)) {
+        Diary diary = diaryService.findDiaryBy(request.getUsername().toLowerCase());
+        if (diary != null) {
             Entry entry = new Entry();
             entry.setTitle(request.getTitle());
             entry.setBody(request.getBody());
-            entry.setAuthor(request.getAuthor());
-
+            entry.setUsername(request.getUsername().toLowerCase());
+            entry.setDateCreated(LocalDateTime.now());
             entryRepository.save(entry);
         } else {
             throw new IllegalArgumentException("Entry creation failed");
         }
     }
 
-    private boolean validateEntryCreation(CreateEntryRequest request) {
-        return request != null &&
-                request.getTitle() != null && !request.getTitle().isEmpty() &&
-                request.getBody() != null && !request.getBody().isEmpty() &&
-                request.getAuthor() != null && !request.getAuthor().isEmpty();
+
+    @Override
+    public List<Entry> findAllEntry(String username) {
+        return entryRepository.findByAuthor(username);
     }
 
     @Override
-    public void deleteEntry(Entry entry) {
-        entryRepository.delete(entry);
+    public void updateEntryBy(UpdateEntryRequest request) {
+        Optional<Entry> foundEntry = entryRepository.findById(request.getId());
+        if (foundEntry.isPresent()) {
+            Entry entry = foundEntry.get();
+            entry.setTitle(request.getTitle());
+            entry.setBody(request.getBody());
+            entry.setAuthor(request.getAuthor());
+
+            entry.setDateCreated(request.getDateCreated);
+
+            entryRepository.save(entry);
+        } else {
+            throw new IllegalArgumentException("Entry not found");
+        }
+
     }
 
     @Override
-    public List<Entry> findAllEntry() {
-        return entryRepository.findAll();
+    public void deleteEntryBy(UpdateEntryRequest request) {
+        Optional<Entry> foundEntry = entryRepository.findById(request.getId());
+        if (foundEntry.isPresent()) {
+            Entry entry = foundEntry.get();
+            entry.setTitle(request.getTitle());
+            entry.setDeleted(true);
+            entryRepository.save(entry);
+        } else {
+            throw new IllegalArgumentException("Entry not found");
+        }
+
     }
 
-    @Override
-    public void save(Entry entry) {
-        entryRepository.save(entry);
-    }
+
+
 }

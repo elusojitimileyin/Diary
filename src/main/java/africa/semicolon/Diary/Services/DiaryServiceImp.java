@@ -1,18 +1,23 @@
 package africa.semicolon.Diary.Services;
 
-import africa.semicolon.Diary.request.RegisterRequest;
 import africa.semicolon.Diary.data.Repository.DiaryRepository;
 import africa.semicolon.Diary.data.model.Diary;
+import africa.semicolon.Diary.request.LoginRequest;
+import africa.semicolon.Diary.request.LogoutRequest;
+import africa.semicolon.Diary.request.RegisterRequest;
+import africa.semicolon.Diary.request.RemoveUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import africa.semicolon.Diary.request.LoginRequest;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class DiaryServiceImp implements DiaryService {
+
     @Autowired
     private DiaryRepository diaryRepository;
+
     @Override
     public void registerUser(RegisterRequest registerRequest) {
         if (validateRegistration(registerRequest)) {
@@ -41,19 +46,23 @@ public class DiaryServiceImp implements DiaryService {
     }
 
     private boolean validateExistingUsername(String username) {
-        Optional<Diary> existingUser = diaryRepository.findByUsername(username);
-        return existingUser.isEmpty();
+        return diaryRepository.findByUsername(username).isEmpty();
     }
 
     @Override
-    public boolean login(LoginRequest loginRequest) {
+    public void login(LoginRequest loginRequest) {
         Optional<Diary> userOptional = diaryRepository.findByUsername(loginRequest.getUsername());
-        if (userOptional.isPresent()) {
-            Diary user = userOptional.get();
-            return user.getPassword().equals(loginRequest.getPassword());
-        }
-        return false;
+        userOptional.filter(user -> user.getPassword().equals(loginRequest.getPassword()));
     }
+
+
+    @Override
+    public void logout(LogoutRequest logoutRequest) {
+        Optional<Diary> userOptional = diaryRepository.findByUsername(logoutRequest.getUsername());
+        userOptional.filter(user -> user.getPassword().equals(logoutRequest.getPassword()));
+    }
+
+
 
     @Override
     public long getNumberOfUsers() {
@@ -62,10 +71,33 @@ public class DiaryServiceImp implements DiaryService {
 
     @Override
     public Diary findDiaryBy(String username) {
+//        return diaryRepository.findByUsername(username).orElse(null);
+    username = username.toLowerCase();
+    Optional<Diary> foundDiary = diaryRepository.findByUsername(username.toLowerCase());
+    if (foundDiary.isEmpty()){
+        throw new IllegalArgumentException("User not found");
+    }
+    return foundDiary.get();
+    }
 
-        Optional<Diary> userOptional = diaryRepository.findById(username);
+    @Override
+    public List<Diary> getAllDiaries() {
+        return diaryRepository.findAll();
+    }
 
-        return userOptional.orElse(null);
+    @Override
+    public void RemoveUser(RemoveUserRequest request) {
+      Diary diary = findDiaryBy(request.getUsername().toLowerCase());
+      if(diary.isLocked()) throw new IllegalArgumentException("login to access this platform");
+
+      if (isPasswordIncorrect(diary, request.getPassword()))
+            throw new IllegalArgumentException("password is wrong");
+      diary.setDeleted(true);
+      diaryRepository.save(diary);
+    }
+
+    private boolean isPasswordIncorrect(Diary diary, String password) {
+        return !diary.getPassword().equals(password);
     }
 
 }

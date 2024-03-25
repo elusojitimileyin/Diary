@@ -9,14 +9,12 @@ import java.util.List;
  @Data
 @Document
 public class Diary {
-@Id
+    @Id
     private String username;
     private String password;
-
-    private String id;
-    private boolean isLocked = true;
-
-    private  List<Entry> entries = new ArrayList<>();
+    private boolean isLocked;
+    public boolean deleted;
+//    private  List<Entry> entries;
 
 
 }
