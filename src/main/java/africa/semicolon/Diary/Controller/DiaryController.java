@@ -1,10 +1,10 @@
 package africa.semicolon.Diary.Controller;
 
+import africa.semicolon.Diary.Dtos.request.*;
 import africa.semicolon.Diary.Services.DiaryService;
 import africa.semicolon.Diary.Services.EntryServices;
 import africa.semicolon.Diary.data.model.Diary;
 import africa.semicolon.Diary.data.model.Entry;
-import africa.semicolon.Diary.request.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

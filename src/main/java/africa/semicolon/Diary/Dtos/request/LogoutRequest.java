@@ -1,9 +1,9 @@
-package africa.semicolon.Diary.request;
+package africa.semicolon.Diary.Dtos.request;
 
 import lombok.Data;
-@Data
 
-public class RemoveUserRequest {
+@Data
+public class LogoutRequest {
     private String username;
     private String password;
 }

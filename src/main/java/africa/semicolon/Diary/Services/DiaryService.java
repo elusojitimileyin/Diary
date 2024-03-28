@@ -1,11 +1,11 @@
 package africa.semicolon.Diary.Services;
 
-import africa.semicolon.Diary.request.LogoutRequest;
-import africa.semicolon.Diary.request.RegisterRequest;
+import africa.semicolon.Diary.Dtos.request.LogoutRequest;
+import africa.semicolon.Diary.Dtos.request.RegisterRequest;
 import africa.semicolon.Diary.data.model.Diary;
 
-import africa.semicolon.Diary.request.LoginRequest;
-import africa.semicolon.Diary.request.RemoveUserRequest;
+import africa.semicolon.Diary.Dtos.request.LoginRequest;
+import africa.semicolon.Diary.Dtos.request.RemoveUserRequest;
 
 import java.util.List;
 

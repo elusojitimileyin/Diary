@@ -3,8 +3,8 @@ package africa.semicolon.Diary.Services;
 import africa.semicolon.Diary.data.Repository.EntryRepository;
 import africa.semicolon.Diary.data.model.Diary;
 import africa.semicolon.Diary.data.model.Entry;
-import africa.semicolon.Diary.request.CreateEntryRequest;
-import africa.semicolon.Diary.request.UpdateEntryRequest;
+import africa.semicolon.Diary.Dtos.request.CreateEntryRequest;
+import africa.semicolon.Diary.Dtos.request.UpdateEntryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,8 @@
 package africa.semicolon.Diary.Services;
 
 import africa.semicolon.Diary.data.model.Entry;
-import africa.semicolon.Diary.request.CreateEntryRequest;
-import africa.semicolon.Diary.request.UpdateEntryRequest;
+import africa.semicolon.Diary.Dtos.request.CreateEntryRequest;
+import africa.semicolon.Diary.Dtos.request.UpdateEntryRequest;
 
 import java.util.List;
 

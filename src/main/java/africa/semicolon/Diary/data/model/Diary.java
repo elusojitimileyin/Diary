@@ -2,6 +2,7 @@ package africa.semicolon.Diary.data.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -14,7 +15,8 @@ public class Diary {
     private String password;
     private boolean isLocked;
     public boolean deleted;
-//    private  List<Entry> entries;
+    @DBRef
+   private  List<Entry> entries;
 
 
 }
